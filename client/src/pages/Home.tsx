@@ -185,11 +185,10 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo Area */}
         <a href="/" className="flex items-center group">
-          {/* Conditional Rendering based on Theme */}
           {theme === "dark" ? (
-            // Dark Mode: Show Night Logo (Responsive size handled by classes)
+            // Dark Mode: Show Night Logo
             <img 
-              src="/logos/night-logo.png" 
+              src="./logos/night-logo.png" 
               alt="ASG Notes Night" 
               className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" 
             />
@@ -198,14 +197,14 @@ const Navbar: React.FC = () => {
             <>
               {/* Mobile Logo */}
               <img 
-                src="/logos/logo-mobile.png" 
+                src="./logos/logo-mobile.png" 
                 alt="ASG Notes Mobile" 
                 className="block md:hidden h-10 w-auto object-contain transition-transform group-hover:scale-105" 
               />
               
               {/* Desktop Logo */}
               <img 
-                src="/logos/logo-pc.png" 
+                src="./logos/logo-pc.png" 
                 alt="ASG Notes PC" 
                 className="hidden md:block h-12 w-auto object-contain transition-transform group-hover:scale-105" 
               />
@@ -289,7 +288,7 @@ const Footer: React.FC = () => {
              {/* Conditional Logo for Footer */}
             <a href="/" className="block w-fit">
               <img 
-                src={theme === "dark" ? "/logos/night-logo.png" : "/logos/logo-pc.png"} 
+                src={theme === "dark" ? "./logos/night-logo.png" : "./logos/logo-pc.png"} 
                 alt="ASG Notes" 
                 className="h-10 w-auto object-contain" 
               />
