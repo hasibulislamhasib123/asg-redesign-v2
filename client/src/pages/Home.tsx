@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Sparkles, Search, ArrowRight, ShoppingCart, User, Menu, Sun, Moon } from "lucide-react";
+import { Sparkles, Search, ArrowRight, ShoppingCart, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/contexts/ThemeContext";
-import { getAssetPath } from "@/lib/utils"; // <--- নতুন ইমপোর্ট
+import { getAssetPath } from "@/lib/utils";
 
-// ... (Book Interface and booksData remain same) ...
+// ✅ এই লাইনগুলো মিসিং ছিল, তাই এরর হচ্ছিল
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+// Book data types
 interface Book {
   id: number;
   title: string;
@@ -17,6 +20,7 @@ interface Book {
   color: string;
 }
 
+// Sample books data
 const booksData: Book[] = [
   {
     id: 1,
@@ -102,6 +106,7 @@ const booksData: Book[] = [
 
 const categories = ["All", "Physics", "Chemistry", "Math", "Biology", "ICT", "Bangla"];
 
+// Book Card Component (লোকালি রাখা হয়েছে)
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
   const formatPrice = (price: number) => `৳${price}`;
 
@@ -150,7 +155,7 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
         {/* Rating */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1 bg-muted/50 px-2 py-0.5 rounded text-xs font-medium text-foreground">
-            ⭐ <span>{book.rating}</span>
+            <Star size={12} className="fill-current text-orange-500" /> <span>{book.rating}</span>
           </div>
           <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">স্টকে আছে</span>
         </div>
@@ -175,173 +180,6 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
   );
 };
 
-// Navbar Component
-const Navbar: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
-  
-  return (
-    <nav className="fixed w-full z-50 top-0 start-0 border-b border-border bg-background/80 backdrop-blur-xl shadow-lg">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo Area */}
-        <a href="/" className="flex items-center group">
-          {theme === "dark" ? (
-            // Dark Mode: Show Night Logo
-            <img 
-              src={getAssetPath("logos/night-logo.png")} 
-              alt="ASG Notes Night" 
-              className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" 
-            />
-          ) : (
-            // Light Mode: Show Mobile/PC Logos based on screen size
-            <>
-              {/* Mobile Logo */}
-              <img 
-                src={getAssetPath("logos/logo-mobile.png")} 
-                alt="ASG Notes Mobile" 
-                className="block md:hidden h-10 w-auto object-contain transition-transform group-hover:scale-105" 
-              />
-              
-              {/* Desktop Logo */}
-              <img 
-                src={getAssetPath("logos/logo-pc.png")} 
-                alt="ASG Notes PC" 
-                className="hidden md:block h-12 w-auto object-contain transition-transform group-hover:scale-105" 
-              />
-            </>
-          )}
-        </a>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8 font-medium text-sm text-muted-foreground">
-          <a href="#" className="hover:text-foreground transition hover:underline decoration-primary decoration-2 underline-offset-4">
-            হোম
-          </a>
-          <a href="#" className="hover:text-foreground transition hover:underline decoration-primary decoration-2 underline-offset-4">
-            সিরিজ
-          </a>
-          <a href="#" className="hover:text-foreground transition hover:underline decoration-primary decoration-2 underline-offset-4">
-            বান্ডেল
-          </a>
-          <a href="#" className="text-primary font-bold bg-primary/10 px-4 py-1.5 rounded-full hover:bg-primary/20 transition">
-            স্পেশাল অফার
-          </a>
-        </div>
-
-        {/* Right Side Actions */}
-        <div className="flex items-center gap-4">
-          {/* Theme Toggle Switch */}
-          <div
-            className={`relative w-16 h-8 rounded-full p-1 cursor-pointer transition-all duration-300 flex items-center border ${
-              theme === "dark" ? "bg-slate-800 justify-end border-slate-700" : "bg-orange-100 justify-start border-orange-200"
-            }`}
-            onClick={toggleTheme}
-            title="Toggle Theme"
-          >
-            <motion.div
-              layout
-              className="w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center z-10"
-              transition={{ type: "spring", stiffness: 700, damping: 30 }}
-            >
-              {theme === "dark" ? (
-                <Moon size={14} className="text-primary fill-primary" />
-              ) : (
-                <Sun size={14} className="text-orange-500 fill-orange-500" />
-              )}
-            </motion.div>
-          </div>
-
-          {/* Cart Button */}
-          <button className="relative p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition">
-            <ShoppingCart size={24} />
-            <span className="absolute top-0 right-0 h-4 w-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-bold border-2 border-background">
-              3
-            </span>
-          </button>
-
-          {/* Login Button */}
-          <button className="hidden md:flex items-center gap-2 text-muted-foreground text-sm font-bold border border-border px-5 py-2 rounded-full hover:border-primary hover:text-foreground transition bg-card">
-            <User size={16} /> লগইন
-          </button>
-
-          {/* Mobile Menu Button */}
-          <button className="md:hidden text-foreground p-2 bg-card rounded-lg hover:bg-muted transition">
-            <Menu size={24} />
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-// Footer Component
-const Footer: React.FC = () => {
-  const { theme } = useTheme(); // Access theme context for Footer logo
-
-  return (
-    <footer className="bg-muted border-t border-border pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand Info with Logo */}
-          <div className="space-y-4 md:col-span-2">
-             {/* Conditional Logo for Footer */}
-            <a href="/" className="block w-fit">
-              <img 
-                src={getAssetPath(theme === "dark" ? "logos/night-logo.png" : "logos/logo-pc.png")} 
-                alt="ASG Notes" 
-                className="h-10 w-auto object-contain" 
-              />
-            </a>
-            <p className="text-muted-foreground text-sm max-w-sm">
-              ASG Smart Notes এবং সাজেশন্স এর সাথে তোমার প্রস্তুতি হোক ১০০ তে ১০০। ডাউনলোড করো এখনি।
-            </p>
-            <div className="pt-4 space-y-3">
-              <div className="flex items-start gap-3 text-muted-foreground text-sm">
-                <span className="text-primary mt-0.5">📍</span>
-                <p>হাউস - ১৩৩২, ফ্ল্যাট এ/৫, এভিনিউ ২, মিরপুর ডিওএইচএস, ঢাকা ১২১৬</p>
-              </div>
-              <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                <span className="text-primary">📞</span>
-                <p>+৮৮০ ১৯১৮ ০০০০ ৫৫</p>
-              </div>
-              <div className="flex items-center gap-3 text-muted-foreground text-sm">
-                <span className="text-primary">✉️</span>
-                <p>support@asgcompressnote.com</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-bold text-foreground mb-6">গুরুত্বপূর্ণ লিংক</h3>
-            <ul className="space-y-3 text-muted-foreground text-sm">
-              <li><a href="#" className="hover:text-primary transition">হোম</a></li>
-              <li><a href="#" className="hover:text-primary transition">আমাদের সম্পর্কে</a></li>
-              <li><a href="#" className="hover:text-primary transition">শর্তাবলী</a></li>
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-bold text-foreground mb-6">সার্ভিস</h3>
-            <ul className="space-y-3 text-muted-foreground text-sm">
-              <li><a href="#" className="hover:text-primary transition">অভিযোগ</a></li>
-              <li><a href="#" className="hover:text-primary transition">একাউন্ট পুনরুদ্ধার</a></li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="border-t border-border pt-8 text-center">
-          <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} ASG Compressed Note. সর্বস্বত্ব সংরক্ষিত।
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-// Main Home Page Component
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -357,7 +195,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground transition-colors duration-300">
-      {/* Navbar */}
+      
+      {/* Navbar Component Imported */}
       <Navbar />
 
       {/* Hero Section */}
@@ -456,7 +295,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* Footer */}
+      {/* Footer Component Imported */}
       <Footer />
     </main>
   );
