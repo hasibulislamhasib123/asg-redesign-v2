@@ -1,0 +1,527 @@
+[
+  {
+    "id": "TC001",
+    "title": "Homepage loads with hero, search, and category filters",
+    "description": "Verify that the Home page loads correctly displaying the hero section, search input, and category filters with all default content visible.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Home page URL"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the hero section is visible with all intended content"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the search input field is present and empty"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify category filter options are displayed and selectable"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Navigation to Bundles page displays correct content",
+    "description": "Ensure navigating to the Bundles view via the navbar renders the correct page content with appropriate bundle listings.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Click the 'Bundles' link in the navbar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Bundles page loads with featured bundles and content"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm URL updates to Bundles route"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Navigation to Series page displays correct content",
+    "description": "Confirm that clicking the Series link in the navbar loads the Series view with the correct series displayed.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Select the 'Series' link from the navbar"
+      },
+      {
+        "type": "assertion",
+        "description": "The Series page loads showing series listings"
+      },
+      {
+        "type": "assertion",
+        "description": "URL updates to the Series route"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "NotFound page displays on invalid URL",
+    "description": "Verify that accessing an undefined route renders the NotFound page gracefully with appropriate messaging.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Manually enter an invalid URL path"
+      },
+      {
+        "type": "assertion",
+        "description": "NotFound page is shown with correct 404 message"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Reusable UI components render with consistent style",
+    "description": "Check that key UI components such as navbar, footer, dialogs, forms, and tables render properly and use consistent styles.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through multiple pages containing UI components"
+      },
+      {
+        "type": "assertion",
+        "description": "All UI components render with consistent styling and expected design"
+      },
+      {
+        "type": "assertion",
+        "description": "Check responsiveness of UI components on desktop, tablet, and mobile viewports"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Theme toggling applies dark and light CSS variables correctly",
+    "description": "Verify that toggling themes updates CSS variables and styles accordingly, with initial default dark theme and future light theme toggle.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "assertion",
+        "description": "Default theme is dark with correct color contrast"
+      },
+      {
+        "type": "action",
+        "description": "Toggle theme to light mode"
+      },
+      {
+        "type": "assertion",
+        "description": "Page updates to light theme colors with CSS variable changes"
+      },
+      {
+        "type": "action",
+        "description": "Toggle theme back to dark mode"
+      },
+      {
+        "type": "assertion",
+        "description": "Dark theme styling is restored correctly"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Interactive map widget loads and responds correctly",
+    "description": "Test that the embedded map widget on the page loads properly, renders markers or relevant map data, and responds to user interactions.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to page containing the map widget"
+      },
+      {
+        "type": "assertion",
+        "description": "Map renders with correct region and markers"
+      },
+      {
+        "type": "action",
+        "description": "Interact with map (zoom, pan)"
+      },
+      {
+        "type": "assertion",
+        "description": "Map responds smoothly to interactions without errors"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Chart and carousel widgets load and animate correctly",
+    "description": "Verify that chart and carousel widgets appear on the page and that animations and interactions function smoothly without visual glitches.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access page with chart and carousel widgets"
+      },
+      {
+        "type": "assertion",
+        "description": "Charts display correct data visualizations and update as intended"
+      },
+      {
+        "type": "assertion",
+        "description": "Carousel shows images/items and allows navigation"
+      },
+      {
+        "type": "action",
+        "description": "Use carousel navigation controls"
+      },
+      {
+        "type": "assertion",
+        "description": "Carousel animates smoothly without frame drops or glitches"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Express server correctly serves static assets and SPA routing fallback",
+    "description": "Ensure the Express server serves static files correctly from the dist/public directory and falls back to index.html for client-side routes.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start the Express server"
+      },
+      {
+        "type": "action",
+        "description": "Request static assets such as CSS, JS bundles, and images"
+      },
+      {
+        "type": "assertion",
+        "description": "Static assets are served with correct headers and no errors"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to valid client-side routes (Home, Bundles, Series)"
+      },
+      {
+        "type": "assertion",
+        "description": "Server returns index.html and client renders the correct view"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to unknown route"
+      },
+      {
+        "type": "assertion",
+        "description": "Server fallback to index.html occurs and NotFound page is rendered client-side"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Search functionality returns accurate results",
+    "description": "Test that search input on Home page returns matching products or content dynamically according to user query.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Enter valid search term in the Home page search input"
+      },
+      {
+        "type": "assertion",
+        "description": "Matching results are displayed accurately reflecting the query"
+      },
+      {
+        "type": "action",
+        "description": "Enter search term with no matching results"
+      },
+      {
+        "type": "assertion",
+        "description": "No results message or empty state is shown"
+      },
+      {
+        "type": "action",
+        "description": "Clear the search input"
+      },
+      {
+        "type": "assertion",
+        "description": "All default products or content is restored"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Category filters correctly filter displayed content",
+    "description": "Verify that selecting various category filters updates the display to show only relevant products or offerings on the Home page.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Select a category filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Displayed products update to only those matching the category"
+      },
+      {
+        "type": "action",
+        "description": "Select multiple category filters if supported"
+      },
+      {
+        "type": "assertion",
+        "description": "Displayed products match selected combined categories"
+      },
+      {
+        "type": "action",
+        "description": "Deselect all filters"
+      },
+      {
+        "type": "assertion",
+        "description": "All products are displayed again"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Animations and icons integrate without visual glitches",
+    "description": "Check that all animations using framer-motion and icons via lucide-react render smoothly without visual defects.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through pages with animations and icons"
+      },
+      {
+        "type": "assertion",
+        "description": "Animations play smoothly and icons display correctly"
+      },
+      {
+        "type": "assertion",
+        "description": "No flickering, layout shifts, or broken icons observed"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Responsive design works on mobile, tablet, and desktop",
+    "description": "Ensure the website layout and components adapt correctly to various screen sizes and device types.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the website on a desktop browser"
+      },
+      {
+        "type": "assertion",
+        "description": "Layout, navigation, and UI components display properly"
+      },
+      {
+        "type": "action",
+        "description": "Resize viewport to tablet dimensions"
+      },
+      {
+        "type": "assertion",
+        "description": "UI adjusts for tablet size without overlap or accessibility issues"
+      },
+      {
+        "type": "action",
+        "description": "Use mobile viewport or device simulator"
+      },
+      {
+        "type": "assertion",
+        "description": "Mobile layout is optimized with accessible menus, readable fonts, and no horizontal scrolling"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Accessibility compliance including color contrast checks",
+    "description": "Verify that the application meets accessibility requirements including sufficient color contrast for both dark and light themes.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "assertion",
+        "description": "Use accessibility tools to measure color contrast ratios for all text and UI elements in dark theme"
+      },
+      {
+        "type": "action",
+        "description": "Switch to light theme"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate color contrast standards compliance in light theme"
+      },
+      {
+        "type": "assertion",
+        "description": "Check all interactive elements have appropriate keyboard focus states and ARIA labels"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Bengali text renders with correct encoding and fonts",
+    "description": "Validate that all Bengali language text in the UI displays correctly with proper font rendering and encoding.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load pages containing Bengali text"
+      },
+      {
+        "type": "assertion",
+        "description": "Bengali text appears correctly without garbled characters or missing glyphs"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify font style and size are consistent and readable for Bengali script"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Application loads pages within acceptable performance metrics",
+    "description": "Ensure pages load quickly and bundle size is optimized for performance on typical devices and networks.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Measure page load times on Home, Bundles, and Series pages with typical network conditions"
+      },
+      {
+        "type": "assertion",
+        "description": "Page load times meet specified performance benchmarks"
+      },
+      {
+        "type": "assertion",
+        "description": "Bundle size remains within acceptable limits without excessive dependencies"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Application functions correctly on Chrome, Firefox, Safari, and Edge browsers",
+    "description": "Test core functionality and UI renderings across major browsers for compatibility and consistent behavior.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open website in Chrome browser and verify major flows"
+      },
+      {
+        "type": "assertion",
+        "description": "No rendering or functionality issues in Chrome"
+      },
+      {
+        "type": "action",
+        "description": "Repeat steps for Firefox, Safari, and Edge"
+      },
+      {
+        "type": "assertion",
+        "description": "All browsers display consistent UI and flows"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Loading states display appropriately during async operations",
+    "description": "Check that asynchronous loading states for dynamic content or widgets are visible and appropriate to inform users during data fetching.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Trigger data loads for maps, charts, or search results"
+      },
+      {
+        "type": "assertion",
+        "description": "Loading indicators appear promptly and disappear once data is loaded"
+      },
+      {
+        "type": "assertion",
+        "description": "No content flicker or stale data is shown during loading"
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Placeholders and navigation for planned features present",
+    "description": "Verify UI includes placeholders or navigation elements for planned features like shopping cart, authentication, checkout, and admin dashboard.",
+    "category": "functional",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through the navbar and dialogs looking for planned feature placeholders"
+      },
+      {
+        "type": "assertion",
+        "description": "Placeholders or entry points for planned features exist and are not broken"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "SEO and analytics scaffolding implemented correctly",
+    "description": "Check that metadata and analytics tracking scripts or scaffolding exist and are correctly configured for future use.",
+    "category": "functional",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Inspect page source for SEO meta tags (title, description, etc.)"
+      },
+      {
+        "type": "assertion",
+        "description": "Meta tags are well-formed and relevant"
+      },
+      {
+        "type": "action",
+        "description": "Verify analytics script or scaffold code is included"
+      },
+      {
+        "type": "assertion",
+        "description": "Analytics code loads without errors"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Multi-language support toggles Bengali and English smoothly",
+    "description": "Test toggling language support between Bengali and English text, ensuring proper rendering and seamless switching.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Switch language toggle from English to Bengali"
+      },
+      {
+        "type": "assertion",
+        "description": "All translatable text updates accurately in Bengali"
+      },
+      {
+        "type": "action",
+        "description": "Switch language toggle back to English"
+      },
+      {
+        "type": "assertion",
+        "description": "Text switches smoothly back to English with no residual artifacts"
+      }
+    ]
+  }
+]

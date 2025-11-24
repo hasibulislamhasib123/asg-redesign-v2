@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "project": "ASG Compressed Note Redesign",
+    "date": "2025-11-19",
+    "prepared_by": "Software Development Manager"
+  },
+  "product_overview": "This project is a comprehensive redesign of the ASG Compressed Note website, enhancing its design, functionality, responsiveness, and user experience. Implemented as a Single Page Application (SPA) with React and TypeScript, it features an improved UI component library, theme management with dark and planned light modes, interactive widgets for showcasing offerings, and server-side static hosting for robust deployment.",
+  "core_goals": [
+    "Deliver a modern, responsive, and visually appealing website for ASG Compressed Note.",
+    "Implement efficient navigation and routing across different views such as Home, Bundles, Series, and NotFound.",
+    "Build a reusable UI component library to standardize the look-and-feel and ensure consistency.",
+    "Implement theme toggling with a default dark theme and planned warm beige/cream light theme.",
+    "Incorporate interactive maps, charts, and carousels to enhance user engagement and showcase offerings.",
+    "Support client-side routing with an Express-based server for static hosting and seamless navigation.",
+    "Ensure accessibility, performance optimization, and cross-browser compatibility."
+  ],
+  "key_features": [
+    "SPA architecture with React routing managing Home, Bundles, Series, and NotFound views.",
+    "Reusable UI component library including navbar, footer, dialogs, forms, tables, and other UI elements.",
+    "Theme management via React context and hooks supporting dark and future light themes with CSS variable theming.",
+    "Interactive widgets such as embedded maps, charts, and carousels to highlight product offerings.",
+    "Server-side static hosting using Express to serve built assets with support for client-side routing fallbacks.",
+    "Integration of animations using framer-motion and iconography with lucide-react.",
+    "Search functionality and category filtering on the Home page.",
+    "Responsive design optimized for mobile, tablet, and desktop devices.",
+    "Planned features include shopping cart, authentication, checkout, order history, wishlist, reviews, admin dashboard, email notifications, analytics, SEO, PWA, and multi-language support."
+  ],
+  "user_flow_summary": [
+    "User visits the website and lands on the Home page featuring a hero section, search, and category filters.",
+    "User navigates via navbar to different sections like Bundles, Series, or triggers dialogs such as authentication.",
+    "User interacts with interactive widgets like maps, charts, and carousels for browsing offerings.",
+    "User toggles between themes, with initial default in dark mode and option for light mode in the future.",
+    "User experiences smooth page transitions and animations during navigation.",
+    "User utilizes search and filtering tools to find products of interest easily.",
+    "Server serves the built SPA assets and handles any unmatched routes with a NotFound page for graceful feedback."
+  ],
+  "validation_criteria": [
+    "All routes (Home, Bundles, Series, NotFound) must be navigable with correct content rendering.",
+    "UI components should be reusable, styled consistently, and responsive across devices.",
+    "Theme toggling must correctly apply dark and light theme styles and update CSS variables accordingly.",
+    "Interactive widgets (map, chart, carousel) must load correctly, be responsive and interactive.",
+    "Express server must serve static assets and support SPA routing fallbacks without errors.",
+    "Search and category filter functions should return accurate results matching user input.",
+    "Animations and icons integrate seamlessly without visual glitches or performance degradation.",
+    "All Bengali text displays correctly with proper encoding and font rendering.",
+    "Color contrast must meet accessibility standards for all themes.",
+    "Pages and components must load within acceptable performance metrics and optimized bundle size.",
+    "Application must be tested and operate correctly on major browsers: Chrome, Firefox, Safari, and Edge.",
+    "Loading states should display appropriately during asynchronous operations.",
+    "Planned features' placeholders and navigation should be implemented for future expansion.",
+    "SEO optimizations and analytics tracking should be in place or scaffolded for implementation.",
+    "Multi-language support must handle Bengali and English text toggling smoothly, if implemented."
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "TypeScript",
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Express"
+    ],
+    "features": [
+      {
+        "name": "App shell and routing",
+        "description": "Sets up the SPA entry point, mounts React, and wires navigation between Home, Bundles, Series, and NotFound views.",
+        "files": [
+          "client/src/main.tsx",
+          "client/src/App.tsx",
+          "client/src/pages/Home.tsx",
+          "client/src/pages/Bundles.tsx",
+          "client/src/pages/Series.tsx",
+          "client/src/pages/NotFound.tsx"
+        ]
+      },
+      {
+        "name": "UI component library",
+        "description": "Reusable layout primitives (navbar, footer) plus a ShadCN-inspired component set exposed under components/ui for dialogs, forms, tables, etc.",
+        "files": [
+          "client/src/components/Navbar.tsx",
+          "client/src/components/Footer.tsx",
+          "client/src/components/AuthDialog.tsx",
+          "client/src/components/ui"
+        ]
+      },
+      {
+        "name": "Theme and composition hooks",
+        "description": "Context + hooks layer for managing theme toggling, media queries, composition helpers, and hash-based routing utilities.",
+        "files": [
+          "client/src/contexts/ThemeContext.tsx",
+          "client/src/hooks/useMobile.tsx",
+          "client/src/hooks/useComposition.ts",
+          "client/src/hooks/useHashLocation.ts",
+          "client/src/hooks/usePersistFn.ts"
+        ]
+      },
+      {
+        "name": "Map and interactive widgets",
+        "description": "Embeds interactive map, charts, carousels, and other showcase widgets to highlight ASG offerings.",
+        "files": [
+          "client/src/components/Map.tsx",
+          "client/src/components/ui/chart.tsx",
+          "client/src/components/ui/carousel.tsx"
+        ]
+      },
+      {
+        "name": "Server-side static hosting",
+        "description": "Express server that serves the built client from dist/public and supports client-side routing fallbacks.",
+        "files": [
+          "server/index.ts"
+        ]
+      }
+    ]
+  }
+}
