@@ -27,7 +27,7 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider
         defaultTheme="dark"
-        // switchable
+        switchable={true} // <--- এই লাইনটি আগে কমেন্ট করা ছিল, এখন ঠিক করে দেওয়া হয়েছে
       >
         <TooltipProvider>
           <Toaster />

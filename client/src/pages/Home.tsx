@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Sparkles, Search, ArrowRight, BookOpen, ShoppingCart, User, Menu } from "lucide-react";
+import { Sparkles, Search, ArrowRight, ShoppingCart, User, Menu, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { APP_TITLE } from "@/const";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Book data types
 interface Book {
@@ -178,15 +178,39 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
 
 // Navbar Component
 const Navbar: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
+  
   return (
     <nav className="fixed w-full z-50 top-0 start-0 border-b border-border bg-background/80 backdrop-blur-xl shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-2.5 text-xl font-bold text-foreground group">
-          <span className="h-9 w-9 bg-gradient-to-tr from-primary to-secondary rounded-xl text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
-            <BookOpen size={20} />
-          </span>
-          <span className="tracking-tight">ASG<span className="text-primary">.</span>Notes</span>
+        {/* Logo Area */}
+        <a href="/" className="flex items-center group">
+          {/* Conditional Rendering based on Theme */}
+          {theme === "dark" ? (
+            // Dark Mode: Show Night Logo (Responsive size handled by classes)
+            <img 
+              src="/logos/night-logo.png" 
+              alt="ASG Notes Night" 
+              className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" 
+            />
+          ) : (
+            // Light Mode: Show Mobile/PC Logos based on screen size
+            <>
+              {/* Mobile Logo */}
+              <img 
+                src="/logos/logo-mobile.png" 
+                alt="ASG Notes Mobile" 
+                className="block md:hidden h-10 w-auto object-contain transition-transform group-hover:scale-105" 
+              />
+              
+              {/* Desktop Logo */}
+              <img 
+                src="/logos/logo-pc.png" 
+                alt="ASG Notes PC" 
+                className="hidden md:block h-12 w-auto object-contain transition-transform group-hover:scale-105" 
+              />
+            </>
+          )}
         </a>
 
         {/* Desktop Menu */}
@@ -207,6 +231,28 @@ const Navbar: React.FC = () => {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
+          {/* Theme Toggle Switch */}
+          <div
+            className={`relative w-16 h-8 rounded-full p-1 cursor-pointer transition-all duration-300 flex items-center border ${
+              theme === "dark" ? "bg-slate-800 justify-end border-slate-700" : "bg-orange-100 justify-start border-orange-200"
+            }`}
+            onClick={toggleTheme}
+            title="Toggle Theme"
+          >
+            {/* Thumb with Icon */}
+            <motion.div
+              layout
+              className="w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center z-10"
+              transition={{ type: "spring", stiffness: 700, damping: 30 }}
+            >
+              {theme === "dark" ? (
+                <Moon size={14} className="text-primary fill-primary" />
+              ) : (
+                <Sun size={14} className="text-orange-500 fill-orange-500" />
+              )}
+            </motion.div>
+          </div>
+
           {/* Cart Button */}
           <button className="relative p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition">
             <ShoppingCart size={24} />
@@ -232,20 +278,24 @@ const Navbar: React.FC = () => {
 
 // Footer Component
 const Footer: React.FC = () => {
+  const { theme } = useTheme(); // Access theme context for Footer logo
+
   return (
     <footer className="bg-muted border-t border-border pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand Info */}
+          {/* Brand Info with Logo */}
           <div className="space-y-4 md:col-span-2">
-            <a href="/" className="flex items-center gap-2.5 text-2xl font-bold text-foreground group">
-              <span className="h-10 w-10 bg-gradient-to-tr from-primary to-secondary rounded-xl text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20">
-                <BookOpen size={24} />
-              </span>
-              <span className="tracking-tight">ASG<span className="text-primary">.</span>Notes</span>
+             {/* Conditional Logo for Footer */}
+            <a href="/" className="block w-fit">
+              <img 
+                src={theme === "dark" ? "/logos/night-logo.png" : "/logos/logo-pc.png"} 
+                alt="ASG Notes" 
+                className="h-10 w-auto object-contain" 
+              />
             </a>
             <p className="text-muted-foreground text-sm max-w-sm">
-              ASG Smart Notes এবং সাজেশন্স এর সাথে তোমার প্রস্তুতি হোক ১০০ তে ১০০।
+              ASG Smart Notes এবং সাজেশন্স এর সাথে তোমার প্রস্তুতি হোক ১০০ তে ১০০। ডাউনলোড করো এখনি।
             </p>
             <div className="pt-4 space-y-3">
               <div className="flex items-start gap-3 text-muted-foreground text-sm">
@@ -309,7 +359,7 @@ export default function Home() {
   });
 
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+    <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground transition-colors duration-300">
       {/* Navbar */}
       <Navbar />
 
