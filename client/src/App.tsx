@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, Router as WouterRouter } from "wouter"; // <--- Router ইমপোর্ট করা হয়েছে
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -9,8 +9,8 @@ import Home from "./pages/Home";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
@@ -23,15 +23,24 @@ function Router() {
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
+  // Vite কনফিগ থেকে বেস পাথ নেওয়া হচ্ছে (যেমন: /asg-redesign-v2)
+  // শেষের স্ল্যাশটি কেটে ফেলা হচ্ছে যাতে wouter ঠিকমতো কাজ করে
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
   return (
     <ErrorBoundary>
       <ThemeProvider
         defaultTheme="dark"
-        switchable={true} // <--- এই লাইনটি আগে কমেন্ট করা ছিল, এখন ঠিক করে দেওয়া হয়েছে
+        switchable={true}
       >
         <TooltipProvider>
           <Toaster />
-          <Router />
+          
+       
+          <WouterRouter base={base}>
+            <Router />
+          </WouterRouter>
+
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
