@@ -3,8 +3,9 @@ import { Sparkles, Search, ArrowRight, ShoppingCart, User, Menu, Sun, Moon } fro
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/contexts/ThemeContext";
+import { getAssetPath } from "@/lib/utils"; // <--- নতুন ইমপোর্ট
 
-// Book data types
+// ... (Book Interface and booksData remain same) ...
 interface Book {
   id: number;
   title: string;
@@ -16,7 +17,6 @@ interface Book {
   color: string;
 }
 
-// Sample books data
 const booksData: Book[] = [
   {
     id: 1,
@@ -102,7 +102,6 @@ const booksData: Book[] = [
 
 const categories = ["All", "Physics", "Chemistry", "Math", "Biology", "ICT", "Bangla"];
 
-// Book Card Component
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
   const formatPrice = (price: number) => `৳${price}`;
 
@@ -188,7 +187,7 @@ const Navbar: React.FC = () => {
           {theme === "dark" ? (
             // Dark Mode: Show Night Logo
             <img 
-              src="./logos/night-logo.png" 
+              src={getAssetPath("logos/night-logo.png")} 
               alt="ASG Notes Night" 
               className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" 
             />
@@ -197,14 +196,14 @@ const Navbar: React.FC = () => {
             <>
               {/* Mobile Logo */}
               <img 
-                src="./logos/logo-mobile.png" 
+                src={getAssetPath("logos/logo-mobile.png")} 
                 alt="ASG Notes Mobile" 
                 className="block md:hidden h-10 w-auto object-contain transition-transform group-hover:scale-105" 
               />
               
               {/* Desktop Logo */}
               <img 
-                src="./logos/logo-pc.png" 
+                src={getAssetPath("logos/logo-pc.png")} 
                 alt="ASG Notes PC" 
                 className="hidden md:block h-12 w-auto object-contain transition-transform group-hover:scale-105" 
               />
@@ -238,7 +237,6 @@ const Navbar: React.FC = () => {
             onClick={toggleTheme}
             title="Toggle Theme"
           >
-            {/* Thumb with Icon */}
             <motion.div
               layout
               className="w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center z-10"
@@ -288,7 +286,7 @@ const Footer: React.FC = () => {
              {/* Conditional Logo for Footer */}
             <a href="/" className="block w-fit">
               <img 
-                src={theme === "dark" ? "./logos/night-logo.png" : "./logos/logo-pc.png"} 
+                src={getAssetPath(theme === "dark" ? "logos/night-logo.png" : "logos/logo-pc.png")} 
                 alt="ASG Notes" 
                 className="h-10 w-auto object-contain" 
               />

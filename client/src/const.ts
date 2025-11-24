@@ -2,8 +2,8 @@ export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
 export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "ASG Notes";
 
-// লোগো পাথে . (ডট) যুক্ত করা হয়েছে
-export const APP_LOGO = "./logos/logo-pc.png"; 
+// আমরা base path সহ লোগো পাথ ব্যবহার করছি
+export const APP_LOGO = import.meta.env.BASE_URL + "logos/logo-pc.png"; 
 
 export const getLoginUrl = () => {
   const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
