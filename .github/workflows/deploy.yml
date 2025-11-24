@@ -16,16 +16,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # pnpm সেটআপ করা হচ্ছে কারণ আপনার প্রজেক্টে pnpm-lock.yaml আছে
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'pnpm'
 
-      - name: Install Dependencies (NPM)
-        run: npm install
+      # এখানে --no-frozen-lockfile ব্যবহার করা হয়েছে যাতে ভার্সন কনফ্লিক্ট না হয়
+      - name: Install Dependencies
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build Project
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
