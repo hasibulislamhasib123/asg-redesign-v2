@@ -3,12 +3,11 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
-import { vitePluginManusRuntime as vitePluginRuntime } from "vite-plugin-manus-runtime";
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginRuntime()];
+const plugins = [react(), tailwindcss(), jsxLocPlugin()];
 
 export default defineConfig({
-  base: "/asg-redesign-v2/", // <--- এই লাইনটি গিটহাব পেজেসের জন্য জরুরি
+  base: "/asg-redesign-v2/",
   plugins,
   resolve: {
     alias: {
@@ -27,6 +26,10 @@ export default defineConfig({
     port: 3000,
     strictPort: false,
     host: true,
+    allowedHosts: [
+      "localhost",
+      "127.0.0.1",
+    ],
     fs: {
       strict: true,
       deny: ["**/.*"],
