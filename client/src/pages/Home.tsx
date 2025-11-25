@@ -3,8 +3,12 @@ import { Sparkles, Search, ArrowRight, ShoppingCart, Star, Users, BookOpen, Awar
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getAssetPath } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-// ✅ মিসিং ইমপোর্টগুলো যোগ করা হয়েছে
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -33,41 +37,24 @@ const booksData: Book[] = [
 ];
 
 const categories = ["All", "Physics", "Chemistry", "Math", "Biology", "ICT", "Bangla"];
-
-// ✨ নতুন সেকশন: শিক্ষার্থীদের মতামত (Testimonials Data) - ছবি যুক্ত করা হয়েছে
-const testimonials = [
-  {
-    id: 1,
-    name: "আব্দুল্লাহ আল মামুন",
-    role: "HSC পরীক্ষার্থী, ঢাকা কলেজ",
-    comment: "ASG Compressed Note এর ফিজিক্স নোটগুলো অসাধারণ! কঠিন বিষয়গুলো এত সহজে বোঝানো হয়েছে যে পরীক্ষার আগে রিভিশন দিতে খুব সুবিধা হয়েছে।",
-    rating: 5,
-    image: "/Reviws/Screenshot_1.png", // ✅ পাবলিক ডিরেক্টরি অনুযায়ী পাথ ঠিক করা হলো
-  },
-  {
-    id: 2,
-    name: "সুমাইয়া ইসলাম",
-    role: "HSC পরীক্ষার্থী, ভিকারুননিসা নূন স্কুল",
-    comment: "অর্গানিক কেমিস্ট্রি নিয়ে খুব ভয়ে ছিলাম। অক্সিজেন সিরিজের নোটগুলো পড়ার পর এখন কনফিডেন্স পাচ্ছি। ধন্যবাদ ASG টিমকে!",
-    rating: 5,
-    image: "/Reviws/Screenshot_2.png", // ✅ পাবলিক ডিরেক্টরি অনুযায়ী পাথ ঠিক করা হলো
-  },
-  {
-    id: 3,
-    name: "রাফসান আহমেদ",
-    role: "বুয়েট ভর্তি পরীক্ষার্থী",
-    comment: "ম্যাট্রিক্স ও নির্ণায়ক নোটটা জাস্ট ওয়াও! শর্টকাট টেকনিকগুলো এডমিশন টেস্টের জন্য খুব কাজে লাগবে।",
-    rating: 4.5,
-    image: "/Reviws/Screenshot_3.png", // ✅ পাবলিক ডিরেক্টরি অনুযায়ী পাথ ঠিক করা হলো
-  },
+// Review Images Data
+const reviewImages = [
+  "Reviews/student1.png",
+  "Reviews/student2.png",
+  "Reviews/student3.png",
+  "Reviews/student4.png",
+  "Reviews/student5.png", 
+  "Reviews/student6.png",
+  "Reviews/student7.png",
+  "Reviews/student8.png",
 ];
 
-// ✨ নতুন সেকশন: পরিসংখ্যান (Stats Data) - আইকনের কালার যোগ করা হলো
+// Stats Data (No Background Style)
 const stats = [
-  { icon: Users, label: "শিক্ষার্থী", value: "৫০,০০০+", color: "text-blue-500" },
-  { icon: BookOpen, label: "নোট বিক্রি", value: "১,২০,০০০+", color: "text-green-500" },
-  { icon: Award, label: "সন্তুষ্ট কাস্টমার", value: "৯৮%", color: "text-yellow-500" },
-  { icon: Sparkles, label: "মোট নোট", value: "২৫০+", color: "text-purple-500" },
+  { icon: Users, label: "শিক্ষার্থী", value: "৫০,০০০+", color: "text-blue-500", glow: "from-blue-500" },
+  { icon: BookOpen, label: "নোট বিক্রি", value: "১,২০,০০০+", color: "text-green-500", glow: "from-green-500" },
+  { icon: Award, label: "সন্তুষ্ট কাস্টমার", value: "৯৮%", color: "text-yellow-500", glow: "from-yellow-500" },
+  { icon: Sparkles, label: "মোট নোট", value: "২৫০+", color: "text-purple-500", glow: "from-purple-500" },
 ];
 
 // Book Card Component
@@ -81,7 +68,7 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="groupHv relative bg-card rounded-2xl p-3 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 cursor-pointer"
+      className="group relative bg-card rounded-2xl p-3 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 cursor-pointer"
     >
       <div className="relative h-[280px] w-full overflow-hidden rounded-xl bg-muted">
         {book.tag && (
@@ -146,7 +133,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground transition-colors duration-300 overflow-x-hidden">
       
-      {/* ✅ Navbar সঠিকভাবে ইমপোর্ট করা হয়েছে */}
       <Navbar />
 
       {/* Hero Section */}
@@ -192,20 +178,23 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ✨ নতুন ফিচার: Stats Section (আপডেটেড - ব্যাকগ্রাউন্ড নেই, গ্লাস গ্লো) */}
-      <section className="py-16 relative z-10">
+      {/* Stats Section */}
+
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="flex flex-col items-centerPc text-center group relative">
-                {/* গ্লাস গ্লো ইফেক্ট */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color.replace("text-", "from-")}/20 to-transparent blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}></div>
+              <div key={index} className="flex flex-col items-center text-center group relative">
+                {/* Glass Glow Behind Icon */}
+                <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-24 h-24 bg-gradient-to-br ${stat.glow} to-transparent blur-[40px] rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 
-                <div className={`p-4 rounded-full mb-3 ${stat.color} bg-card/50 backdrop-blur-md border border-border shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10`}>
-                  <stat.icon size={32} />
+                {/* Icon without background card */}
+                <div className={`mb-4 ${stat.color} transition-all duration-300 relative z-10 transform group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(0,0,0,0.2)]`}>
+                  <stat.icon size={56} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-4xl font-black text-foreground mb-1 relative z-10">{stat.value}</h3>
-                <p className="text-muted-foreground text-sm font-medium relative z-10 uppercase tracking-wider">{stat.label}</p>
+                
+                <h3 className="text-4xl font-black text-foreground mb-1 relative z-10 tracking-tight">{stat.value}</h3>
+                <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest relative z-10">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -256,68 +245,71 @@ export default function Home() {
         )}
       </section>
 
-      {/* ✨ নতুন ফিচার: Testimonials Section (আপডেটেড - ছবি এবং গ্লাস গ্লো ইফেক্ট) */}
+      {/* Reviews Section */}
       <section className="py-24 relative overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-secondary/5 blur-[150px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-foreground mb-6 leading-tight">
-              আমাদের শিক্ষার্থীরা <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">যা বলছেন</span>
+              আমাদের শিক্ষার্থীরা <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">যা বলছেন</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              হাজার হাজার শিক্ষার্থী আমাদের নোট পড়ে তাদের কাঙ্ক্ষিত সাফল্য অর্জন করেছে। তাদের কিছু কথা শুনুন।
+              হাজার হাজার শিক্ষার্থী আমাদের নোট পড়ে তাদের কাঙ্ক্ষিত সাফল্য অর্জন করেছে। তাদের কিছু প্রমাণ দেখুন।
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((item) => (
-              <motion.div 
-                key={item.id} 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: item.id * 0.1 }}
-                className="bg-card/50 backdrop-blur-xl border border-border/50 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 relative group hover:-translate-y-2"
-              >
-                {/* গ্লাস গ্লো ইফেক্ট */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 blur-xl rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
-                <Quote className="absolute top-8 right-8 text-primary/20 h-12 w-12 group-hover:text-primary/40 transition-colors rotate-180" />
+          {/* Review Images Grid - Rounded Rectangle, Glassy & Clickable */}
+          <div className="flex flex-wrap justify-center gap-8">
+            {reviewImages.map((image, index) => (
+              <Dialog key={index}>
+                <DialogTrigger asChild>
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="relative group cursor-pointer"
+                  >
+                    {/* Glass Glow Layer Behind Image */}
+                    <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    
+                    {/* Image Container - Rounded Rectangle Shape (Rounded-3xl) */}
+                    <div className="w-full md:w-[400px] h-auto overflow-hidden border-2 border-card/50 backdrop-blur-xl shadow-lg relative z-10 transform transition-transform duration-500 group-hover:scale-[1.02] rounded-3xl bg-muted">
+                        <img 
+                          src={getAssetPath(image)} 
+                          alt={`Student Review ${index + 1}`} 
+                          className="w-full h-auto object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = `https://placehold.co/600x200?text=Review+${index + 1}`;
+                          }}
+                        />
+                        {/* Overlay with Zoom Icon */}
+                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="bg-black/40 p-3 rounded-full backdrop-blur-sm border border-white/20">
+                              <Quote className="text-white w-6 h-6 drop-shadow-lg" />
+                            </div>
+                        </div>
+                    </div>
+                  </motion.div>
+                </DialogTrigger>
                 
-                <div className="flex items-center gap-1 mb-6 relative z-10">
-                  {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      size={18} 
-                      className={i < Math.floor(item.rating) ? "fill-orange-500 text-orange-500" : "text-muted-foreground"} 
+                {/* Modal Content */}
+                <DialogContent className="max-w-4xl p-0 overflow-hidden border-none bg-transparent shadow-none">
+                  <div className="relative w-full h-full flex items-center justify-center p-4">
+                    <img 
+                      src={getAssetPath(image)} 
+                      alt={`Student Review ${index + 1}`} 
+                      className="w-full h-auto max-h-[90vh] object-contain rounded-2xl shadow-2xl border border-white/10"
                     />
-                  ))}
-                </div>
-                
-                <p className="text-foreground/90 mb-8 leading-relaxed italic text-lg relative z-10">
-                  "{item.comment}"
-                </p>
-                
-                <div className="flex items-center gap-4 relative z-10">
-                  {/* ছবি যুক্ত করা হয়েছে এবং গ্লাস ইফেক্ট */}
-                  <div className="h-14 w-14 rounded-full overflow-hidden border-2 border-primary/30 shadow-md">
-                    <img src={getAssetPath(item.image)} alt={item.name} className="h-full w-full object-cover" />
                   </div>
-                  <div>
-                    <h4 className="font-bold text-foreground text-base">{item.name}</h4>
-                    <p className="text-xs text-primary font-medium mt-0.5">{item.role}</p>
-                  </div>
-                </div>
-              </motion.div>
+                </DialogContent>
+              </Dialog>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ✅ Footer সঠিকভাবে কাজ করবে এখন */}
       <Footer />
     </main>
   );
