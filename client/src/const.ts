@@ -2,7 +2,7 @@ export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
 export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "ASG Notes";
 
-// আমরা base path সহ লোগো পাথ ব্যবহার করছি
+// Using logo path with base path for correct asset resolution
 export const APP_LOGO = import.meta.env.BASE_URL + "logos/logo-pc.png"; 
 
 export const getLoginUrl = () => {

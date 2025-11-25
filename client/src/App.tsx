@@ -4,17 +4,21 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch, Router as WouterRouter } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { getAssetPath } from "@/lib/utils";
+
+// Pages
 import Home from "./pages/Home";
 import SeriesPage from "./pages/Series";
-import BundlesPage from "./pages/Bundles"; // <--- নতুন ইমপোর্ট
-import { getAssetPath } from "@/lib/utils";
+import BundlesPage from "./pages/Bundles";
+import BookDetails from "./pages/BookDetails"; // <--- new import
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/series" component={SeriesPage} />
-      <Route path="/bundles" component={BundlesPage} /> {/* <--- নতুন রাউট */}
+      <Route path="/bundles" component={BundlesPage} />
+      <Route path="/book/:id" component={BookDetails} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -22,7 +26,6 @@ function Router() {
 }
 
 function App() {
-  // GitHub Pages এর জন্য বেস পাথ সেট করা
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   return (
