@@ -33,12 +33,25 @@ const seriesList = ["All", "Compressed Note Series", "Oxygen Series", "ASG Flix 
 const categories = ["All", "Physics", "Chemistry", "Math", "Biology", "ICT", "Bangla"];
 
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
+  const [, setLocation] = useLocation();
+  
+  const handleCardClick = () => {
+    setLocation(`/book/${book.id}`);
+    window.scrollTo(0, 0);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log("Added to cart from Series:", book.title);
+  };
+
   return (
     <motion.div
       layout
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
+      onClick={handleCardClick}
       className="group relative bg-card rounded-2xl p-3 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-2xl cursor-pointer"
     >
       <div className="relative h-[240px] w-full overflow-hidden rounded-xl bg-muted">
@@ -56,8 +69,21 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
 
         {/* Hover Actions */}
         <div className="absolute inset-0 bg-muted/80 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-             <Button variant="secondary" size="sm" className="rounded-full font-bold">প্রিভিউ</Button>
-             <Button size="sm" className="rounded-full font-bold"> <ShoppingCart size={16} className="mr-2"/> কিনুন</Button>
+             <Button 
+                variant="secondary" 
+                size="sm" 
+                className="rounded-full font-bold"
+                onClick={(e) => { e.stopPropagation(); handleCardClick(); }}
+             >
+                প্রিভিউ
+             </Button>
+             <Button 
+                size="sm" 
+                className="rounded-full font-bold"
+                onClick={handleAddToCart}
+             > 
+                <ShoppingCart size={16} className="mr-2"/> কিনুন
+             </Button>
         </div>
       </div>
       
@@ -66,13 +92,16 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
             <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold border border-border px-1.5 rounded">{book.series.split(" ")[0]}</p>
             <div className="flex items-center gap-1 text-xs text-yellow-500 font-bold"><Star size={10} fill="currentColor"/> {book.rating}</div>
         </div>
-        <h3 className="text-base font-bold text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors">{book.title}</h3>
+        <h3 className="text-base font-bold text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors h-10">{book.title}</h3>
         <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
            <div className="flex flex-col">
               <span className="text-xs text-muted-foreground line-through">৳{book.oldPrice}</span>
               <span className="text-lg font-bold text-primary">৳{book.price}</span>
            </div>
-           <button className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-colors">
+           <button 
+             onClick={handleAddToCart}
+             className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-colors shadow-sm hover:shadow-md hover:rotate-6"
+           >
               <ShoppingCart size={16}/>
            </button>
         </div>
@@ -98,7 +127,7 @@ export default function SeriesPage() {
   const displayBooks = filteredBooks.slice(0, visibleCount);
 
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-white">
+   <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-white pb-24 md:pb-20">
       <Navbar />
       
       {/* Page Header */}

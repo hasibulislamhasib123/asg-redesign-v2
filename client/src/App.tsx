@@ -10,7 +10,7 @@ import { getAssetPath } from "@/lib/utils";
 import Home from "./pages/Home";
 import SeriesPage from "./pages/Series";
 import BundlesPage from "./pages/Bundles";
-import BookDetails from "./pages/BookDetails"; // <--- new import
+import BookDetails from "./pages/BookDetails"; // New import: BookDetails page component for individual book display
 
 function Router() {
   return (
@@ -18,7 +18,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/series" component={SeriesPage} />
       <Route path="/bundles" component={BundlesPage} />
-      <Route path="/book/:id" component={BookDetails} />
+      <Route path="/book/:id" component={BookDetails} /> {/* New Route: Dynamic book detail page with ID parameter */}
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

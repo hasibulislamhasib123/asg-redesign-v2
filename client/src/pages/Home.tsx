@@ -3,43 +3,14 @@ import { Sparkles, Search, ArrowRight, ShoppingCart, Star, Users, BookOpen, Awar
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getAssetPath } from "@/lib/utils";
-import { useLocation } from "wouter"; 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
+import { useLocation } from "wouter";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+// Import centralized mock data with book information, category filters, and Book interface
+import { booksData, categories, Book } from "@/lib/mockData";
 
-// Book Interface
-interface Book {
-  id: number;
-  title: string;
-  price: number;
-  oldPrice: number;
-  category: string;
-  tag: string;
-  rating: number;
-  color: string;
-}
-
-// Book Data
-const booksData: Book[] = [
-  { id: 1, title: "নিউটনিয়ান বলবিদ্যা - পদার্থবিজ্ঞান ১ম পত্র", price: 30, oldPrice: 50, category: "Physics", tag: "Hot", rating: 4.9, color: "bg-rose-500" },
-  { id: 2, title: "জৈব রসায়ন (অক্সিজেন সিরিজ) - রসায়ন ২য় পত্র", price: 35, oldPrice: 55, category: "Chemistry", tag: "Best Seller", rating: 5.0, color: "bg-blue-500" },
-  { id: 3, title: "ম্যাট্রিক্স ও নির্ণায়ক - উচ্চতর গণিত ১ম পত্র", price: 25, oldPrice: 40, category: "Math", tag: "New", rating: 4.8, color: "bg-amber-500" },
-  { id: 4, title: "রক্ত ও সঞ্চালন - জীববিজ্ঞান ২য় পত্র", price: 40, oldPrice: 60, category: "Biology", tag: "", rating: 4.7, color: "bg-emerald-500" },
-  { id: 5, title: "আইসিটি - নেটওয়ার্কিং ও ওয়েব", price: 20, oldPrice: 35, category: "ICT", tag: "Discount", rating: 4.6, color: "bg-purple-500" },
-  { id: 6, title: "সোনার তরী - বাংলা ১ম পত্র", price: 15, oldPrice: 25, category: "Bangla", tag: "", rating: 4.5, color: "bg-orange-500" },
-  { id: 7, title: "তাপগতিবিদ্যা - পদার্থবিজ্ঞান ২য় পত্র", price: 30, oldPrice: 42, category: "Physics", tag: "", rating: 4.8, color: "bg-cyan-500" },
-  { id: 8, title: "গুণগত রসায়ন - রসায়ন ১ম পত্র", price: 20, oldPrice: 40, category: "Chemistry", tag: "Hot", rating: 4.9, color: "bg-fuchsia-500" },
-];
-
-const categories = ["All", "Physics", "Chemistry", "Math", "Biology", "ICT", "Bangla"];
-
-// Review Images
+// Review images and statistics data for testimonials and achievement metrics display
 const reviewImages = [
   "Reviews/student1.png",
   "Reviews/student2.png",
@@ -48,17 +19,16 @@ const reviewImages = [
   "Reviews/student5.png", 
   "Reviews/student6.png",
   "Reviews/student7.png",
+  "Reviews/student8.png",
 ];
 
-// Stats Data
 const stats = [
-  { icon: Users, label: "শিক্ষার্থী", value: "৫০,০০০+", color: "text-blue-500", glow: "from-blue-500" },
-  { icon: BookOpen, label: "নোট বিক্রি", value: "১,২০,০০০+", color: "text-green-500", glow: "from-green-500" },
-  { icon: Award, label: "সন্তুষ্ট কাস্টমার", value: "৯৮%", color: "text-yellow-500", glow: "from-yellow-500" },
-  { icon: Sparkles, label: "মোট নোট", value: "২৫০+", color: "text-purple-500", glow: "from-purple-500" },
+  { icon: Users, label: "Active Students", value: "50,000+", color: "text-blue-500", glow: "from-blue-500" },
+  { icon: BookOpen, label: "Notes Sold", value: "120,000+", color: "text-green-500", glow: "from-green-500" },
+  { icon: Award, label: "Satisfied Customers", value: "98%", color: "text-yellow-500", glow: "from-yellow-500" },
+  { icon: Sparkles, label: "Total Notes", value: "250+", color: "text-purple-500", glow: "from-purple-500" },
 ];
 
-// Book Card Component
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
   const formatPrice = (price: number) => `৳${price}`;
   const [, setLocation] = useLocation(); 
@@ -86,7 +56,7 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
         <div className={`w-full h-full bg-gradient-to-br from-muted to-muted-foreground group-hover:scale-110 transition-transform duration-700 flex flex-col items-center justify-center p-6 text-center`}>
           <div className={`w-20 h-20 rounded-full ${book.color} opacity-20 blur-xl absolute`}></div>
           <div className="relative z-10 text-6xl font-black text-muted-foreground opacity-50 select-none group-hover:text-muted-foreground transition-colors">
-            {book.category.substring(0, 2)}
+            {book.category.slice(0, 2)}
           </div>
           <p className="relative z-10 text-xs text-muted-foreground font-medium tracking-[0.2em] mt-2 uppercase border border-border/50 px-2 py-1 rounded">
             {book.category} সিরিজ
@@ -149,10 +119,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground transition-colors duration-300 overflow-x-hidden">
-      
       <Navbar />
 
-      {/* Hero Section */}
       <section className="relative pt-36 pb-16 px-6 text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 blur-[100px] rounded-full pointer-events-none animate-pulse" />
         <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-secondary/10 blur-[120px] rounded-full pointer-events-none" />
@@ -195,20 +163,16 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Stats Section (Transparent & Glass Glow) */}
+      {/* Stats Section */}
       <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="flex flex-col items-center text-center group relative">
-                {/* Glass Glow Behind Icon */}
                 <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-24 h-24 bg-gradient-to-br ${stat.glow} to-transparent blur-[40px] rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                
-                {/* Icon only (No background card) */}
                 <div className={`mb-4 ${stat.color} transition-all duration-300 relative z-10 transform group-hover:scale-110 drop-shadow-lg`}>
                   <stat.icon size={56} strokeWidth={1.5} />
                 </div>
-                
                 <h3 className="text-4xl font-black text-foreground mb-1 relative z-10 tracking-tight">{stat.value}</h3>
                 <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest relative z-10">{stat.label}</p>
               </div>
@@ -255,97 +219,153 @@ export default function Home() {
             <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
               <Search size={40} className="text-muted-foreground" />
             </div>
-            <h3 className="text-xl font-bold text-foreground">দুঃখিত! কিছু পাওয়া যায়নি</h3>
-            <p className="text-muted-foreground mt-2">অন্য কোনো কি-ওয়ার্ড দিয়ে চেষ্টা করো।</p>
+            <h3 className="text-xl font-bold text-foreground">No Results Found</h3>
+            <p className="text-muted-foreground mt-2">Try searching with different keywords or category filters.</p>
           </motion.div>
         )}
       </section>
 
-      {/* ✨ Testimonials Section: Super-Wide Strip Look, Micro-Modal */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-foreground mb-6 leading-tight">
-              আমাদের শিক্ষার্থীরা <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">যা বলছেন</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              হাজার হাজার শিক্ষার্থী আমাদের নোট পড়ে তাদের কাঙ্ক্ষিত সাফল্য অর্জন করেছে।
-            </p>
-          </div>
+ 
+      {/* Testimonials Section: Displays customer reviews and feedback with animated background effects */}
+<section className="py-24 relative overflow-hidden bg-background/50">
+  {/* Animated background: Multiple pulsing gradient circles creating depth and visual interest */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute w-96 h-96 -top-48 -left-48 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+    <div className="absolute w-96 h-96 -bottom-48 -right-48 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '700ms' }}></div>
+    <div className="absolute w-64 h-64 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1000ms' }}></div>
+  </div>
 
-          {/* Wide Strip Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {reviewImages.map((image, index) => (
-              <motion.div 
-                key={index} 
-                layoutId={`review-${index}`} // For shared layout animation
-                className="relative group cursor-pointer"
-                onClick={() => setSelectedImage(image)}
-              >
-                {/* Glass Glow Layer */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-secondary/40 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
-                {/* Image Container - Pill Shape (980x128 ratio enforced by aspect class) */}
-                <div className="aspect-[980/128] w-full rounded-full overflow-hidden border-2 border-card/50 backdrop-blur-xl shadow-lg relative z-10 transform transition-transform duration-500 group-hover:scale-[1.02] bg-muted">
-                    <img 
-                      src={getAssetPath(image)} 
-                      alt={`Student Review ${index + 1}`} 
-                      className="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://placehold.co/980x128?text=Review+${index + 1}`;
-                      }}
-                    />
-                    {/* Hover Overlay Icon */}
-                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <Quote className="text-white w-6 h-6 drop-shadow-lg" />
-                    </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+  {/* Floating particles: Decorative animated elements for enhanced visual appeal */}
+  {[...Array(15)].map((_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-1 h-1 bg-primary/20 rounded-full pointer-events-none"
+      style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+      }}
+      animate={{
+        y: [0, -30, 0],
+        opacity: [0.2, 0.5, 0.2],
+      }}
+      transition={{
+        duration: 3 + Math.random() * 2,
+        repeat: Infinity,
+        delay: Math.random() * 2,
+      }}
+    />
+  ))}
 
-        {/* Micro-Modal (No Fullscreen Backdrop) */}
-        <AnimatePresence>
-          {selectedImage && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-              {/* The Modal Card - pointer-events-auto to allow interaction */}
-              <motion.div
-                layoutId={`review-${reviewImages.indexOf(selectedImage)}`}
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                className="pointer-events-auto relative bg-card border border-border rounded-2xl shadow-2xl max-w-3xl w-[90vw] overflow-hidden"
-              >
-                {/* Close Button */}
-                <Button 
-                  size="icon" 
-                  variant="ghost" 
-                  className="absolute top-2 right-2 z-20 bg-background/50 backdrop-blur-md hover:bg-destructive hover:text-destructive-foreground rounded-full"
-                  onClick={() => setSelectedImage(null)}
-                >
-                  <X size={20} />
-                </Button>
+  <div className="max-w-7xl mx-auto px-6 relative z-10">
+    {/* Header Section: Testimonials title with gradient text and introduction */}
+    <motion.div 
+      className="text-center mb-16"
+      initial={{ opacity: 0, y: -30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
+      <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">
+        What Our Students Say{' '}
+        {/* Gradient Text: Optimized for visibility in both light and dark themes */}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary">
+          About Us
+        </span>
+      </h2>
+      <p className="text-muted-foreground max-w-xl mx-auto text-lg font-medium">
+        Thousands of students have achieved their academic goals using our comprehensive notes and study materials.
+      </p>
+    </motion.div>
 
-                {/* Expanded Image */}
-                <img 
-                  src={getAssetPath(selectedImage)} 
-                  alt="Review Expanded" 
-                  className="w-full h-auto max-h-[80vh] object-contain"
-                />
-              </motion.div>
-              
-              {/* Invisible backdrop to close on click outside (optional, removes interaction with page while open) */}
-              {/* If you strictly want NO backdrop, remove this div, but then closing needs the X button */}
-              <div 
-                className="absolute inset-0 pointer-events-auto" 
-                onClick={() => setSelectedImage(null)}
-              ></div>
+    {/* Reviews Grid: Testimonial cards with hover effects and interactive modal preview */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {reviewImages.map((image, index) => (
+        <motion.div
+          key={index}
+          className="relative group cursor-pointer"
+          onClick={() => setSelectedImage(image)}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          whileHover={{ y: -5 }}
+        >
+          {/* Glow effect: Subtle gradient overlay for card that activates on hover */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/40 to-secondary/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-500 pointer-events-none"></div>
+          
+          {/* Card Container: Glassmorphic design with semi-transparent background and backdrop blur */}
+          <div className="relative bg-card dark:bg-zinc-900/80 backdrop-blur-md border border-primary/10 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group-hover:border-primary/30">
+            
+            {/* Quote icon: Decorative primary-colored icon that appears on hover */}
+            <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0">
+              <div className="bg-background/80 backdrop-blur-sm rounded-full p-2 border border-primary/20 shadow-sm">
+                <Quote className="w-4 h-4 text-primary" />
+              </div>
             </div>
-          )}
-        </AnimatePresence>
-      </section>
 
+            {/* Image container: Displays testimonial in wide horizontal strip layout for visual appeal */}
+            <div className="p-1">
+              <div className="relative rounded-xl overflow-hidden bg-muted/30 dark:bg-black/20 aspect-[6/1] flex items-center justify-center">
+                <img
+                  src={getAssetPath(image)}
+                  alt={`Student Review ${index + 1}`}
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = `https://placehold.co/600x100/transparent/png?text=Review+${index + 1}`;
+                  }}
+                />
+                {/* Subtle overlay: Light gradient effect that appears on hover for emphasis */}
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            </div>
+
+            {/* Bottom gradient bar: Animated accent line that extends on hover for interactive feedback */}
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary via-purple-500 to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+
+  {/* Micro-Modal: Interactive image preview without page blur, displays selected testimonial */}
+  <AnimatePresence>
+    {selectedImage && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+        {/* Invisible backdrop to catch clicks outside */}
+        <div 
+          className="absolute inset-0 pointer-events-auto" 
+          onClick={() => setSelectedImage(null)}
+        ></div>
+
+        {/* Modal Content */}
+        <motion.div
+          className="relative max-w-4xl w-[90vw] pointer-events-auto"
+          initial={{ scale: 0.8, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.8, opacity: 0, y: 20 }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setSelectedImage(null)}
+            className="absolute -top-4 -right-4 z-20 bg-background hover:bg-destructive hover:text-destructive-foreground text-foreground rounded-full p-2 shadow-lg border border-border transition-all duration-200 hover:scale-110"
+          >
+            <X size={20} />
+          </button>
+
+          {/* Expanded Image Container */}
+          <div className="bg-card/95 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-border ring-1 ring-primary/10 p-2">
+            <img
+              src={getAssetPath(selectedImage)}
+              alt="Review Expanded"
+              className="w-full h-auto rounded-xl"
+            />
+          </div>
+        </motion.div>
+      </div>
+    )}
+  </AnimatePresence>
+</section>
       <Footer />
     </main>
   );
