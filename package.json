@@ -96,3 +96,9 @@
     }
   }
 }
+{
+  "name": "asg-redesign-v2",
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.4.1",
+  ...
+}git add .
