@@ -1,2 +1,5 @@
 server/
+server/index.ts
+./server/index.ts
 dist/
+node_modules/
