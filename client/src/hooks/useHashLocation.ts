@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BaseLocationHook } from "wouter/use-location";
+import type { BaseLocationHook } from "wouter";
 
 // returns the current hash location (minus the '#' prefix)
 export const useHashLocation: BaseLocationHook = () => {

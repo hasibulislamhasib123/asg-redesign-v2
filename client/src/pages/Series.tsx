@@ -5,6 +5,7 @@ import { Search, Filter, ArrowLeft, ShoppingCart, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AddToCartButton from "../components/AddToCartButton";
 
 // Book Interface & Data (Expanded with Series)
 interface Book {
@@ -76,14 +77,7 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
                 onClick={(e) => { e.stopPropagation(); handleCardClick(); }}
              >
                 প্রিভিউ
-             </Button>
-             <Button 
-                size="sm" 
-                className="rounded-full font-bold"
-                onClick={handleAddToCart}
-             > 
-                <ShoppingCart size={16} className="mr-2"/> কিনুন
-             </Button>
+            </Button>
         </div>
       </div>
       
@@ -98,12 +92,13 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
               <span className="text-xs text-muted-foreground line-through">৳{book.oldPrice}</span>
               <span className="text-lg font-bold text-primary">৳{book.price}</span>
            </div>
-           <button 
-             onClick={handleAddToCart}
-             className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-colors shadow-sm hover:shadow-md hover:rotate-6"
-           >
-              <ShoppingCart size={16}/>
-           </button>
+               <AddToCartButton 
+                  size="sm" 
+                  text="কিনুন" 
+                  onClick={(e) => { 
+                    console.log("Add to cart clicked"); 
+                  }}
+                />
         </div>
       </div>
     </motion.div>

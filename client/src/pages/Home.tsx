@@ -7,6 +7,8 @@ import { useLocation } from "wouter";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FAQSection from "@/components/FAQSection";
+import AddToCartButton from '@/components/AddToCartButton';
 // Import centralized mock data with book information, category filters, and Book interface
 import { booksData, categories, Book } from "@/lib/mockData";
 
@@ -63,18 +65,15 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
           </p>
         </div>
         <div className="absolute inset-0 bg-muted/60 backdrop-blur-[3px] flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-          <button 
-            onClick={(e) => { e.stopPropagation(); handleCardClick(); }}
-            className="flex items-center gap-2 bg-foreground text-background px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 active:scale-95 transition shadow-lg"
-          >
-            প্রিভিউ
-          </button>
-          <button 
-            onClick={(e) => { e.stopPropagation(); console.log("Add to cart clicked"); }}
-            className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold text-sm hover:bg-red-600 active:scale-95 transition shadow-lg shadow-primary/20"
-          >
-            <ShoppingCart size={16} /> কিনুন
-          </button>
+          <Button 
+                    variant="secondary" 
+                    size="sm" 
+                    className="rounded-full font-bold"
+                    onClick={(e) => { e.stopPropagation(); handleCardClick(); }}
+                 >
+                    প্রিভিউ
+                 </Button>
+ 
         </div>
       </div>
       <div className="mt-4 px-2 space-y-2">
@@ -92,12 +91,12 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
             <span className="text-xs text-muted-foreground line-through">{formatPrice(book.oldPrice)}</span>
             <span className="text-xl font-bold text-foreground">{formatPrice(book.price)}</span>
           </div>
-          <button 
-            onClick={(e) => { e.stopPropagation(); console.log("Add to cart"); }}
-            className="h-10 w-10 flex items-center justify-center rounded-xl bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:rotate-12"
-          >
-            <ShoppingCart size={20} />
-          </button>
+          <AddToCartButton 
+  size="sm" 
+  text="কিনুন" 
+  onClick={(e) => { 
+    console.log("Add to cart clicked"); 
+  }} />
         </div>
       </div>
     </motion.div>
@@ -366,6 +365,7 @@ export default function Home() {
     )}
   </AnimatePresence>
 </section>
+<FAQSection />
       <Footer />
     </main>
   );

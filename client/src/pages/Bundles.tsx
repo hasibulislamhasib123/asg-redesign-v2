@@ -5,7 +5,7 @@ import { Search, Filter, ArrowLeft, ShoppingCart, Star, Sparkles, ArrowRight } f
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
+import AddToCartButton from "../components/AddToCartButton";
 // Bundle Interface
 interface Bundle {
   id: number;
@@ -124,18 +124,10 @@ const BundleCard: React.FC<{ bundle: Bundle }> = ({ bundle }) => {
                 onClick={(e) => { e.stopPropagation(); handleCardClick(); }}
              >
                 বিস্তারিত দেখুন
-             </Button>
-             <Button 
-                size="sm" 
-                className="rounded-full font-bold shadow-lg"
-                onClick={handleAddToCart}
-             > 
-                <ShoppingCart size={14} className="mr-1.5"/> কিনুন
-             </Button>
-        </div>
-      </div>
-      
-      {/* Info Section */}
+                  </Button>
+             </div> {/* close hover actions */}
+                </div> {/* close cover / image container */}
+                {/* Info Section */}
       <div className="mt-4 px-2 space-y-3 flex flex-col flex-grow justify-between">
         <div>
             <div className="flex justify-between items-start mb-1">
@@ -155,12 +147,12 @@ const BundleCard: React.FC<{ bundle: Bundle }> = ({ bundle }) => {
                 <span className="text-[10px] text-green-500 font-bold bg-green-500/10 px-1.5 py-0.5 rounded">-{Math.round(((bundle.oldPrice - bundle.price) / bundle.oldPrice) * 100)}%</span>
               </div>
            </div>
-           <button 
-             onClick={handleAddToCart}
-             className="h-9 w-9 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md"
-           >
-              <ShoppingCart size={18}/>
-           </button>
+          <AddToCartButton 
+  size="sm" 
+  text="কিনুন" 
+  onClick={(e) => { 
+    console.log("Add to cart clicked"); 
+  }} />
         </div>
       </div>
     </motion.div>

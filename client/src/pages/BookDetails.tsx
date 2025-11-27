@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { booksData, Book } from "@/lib/mockData";
+import AddToCartButton from "../components/AddToCartButton";
 
 // Logic Helpers: Utility functions for book series organization and recommendation calculations
 
@@ -204,9 +205,13 @@ export default function BookDetails() {
                 <span className="w-8 text-center font-bold">{quantity}</span>
                 <button onClick={() => setQuantity(quantity + 1)} className="px-3 hover:text-primary font-bold text-lg">+</button>
               </div>
-              <Button size="lg" className="flex-1 rounded-full text-base h-12 font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all">
-                <ShoppingCart className="mr-2 h-5 w-5" /> কার্টে যোগ করুন - {formatPrice(book.price * quantity)}
-              </Button>
+                  <AddToCartButton 
+                  size="sm" 
+                  text="কার্টে যোগ করুন" 
+                  onClick={(e) => { 
+                    console.log("Add to cart clicked"); 
+                  }}
+                />
               <Button size="icon" variant="outline" className="rounded-full h-12 w-12 border-input hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
                 <Heart size={20} />
               </Button>
